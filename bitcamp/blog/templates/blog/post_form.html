@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<center>
+
+    {% if not form.instance.pk %}
+    <h1>ახალი პოსტის დამატება!</h1>
+    {% else %}
+    <h1>პოსტის განახლება!</h1>
+    {% endif %}
+    
+    <div class="jumbotron">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <input class="btn btn-warning" type="submit" value="Submit">
+        </form>
+    </div>
+    
+</center>
+{% endblock %}

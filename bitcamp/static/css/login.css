@@ -1,0 +1,37 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.submit-button {
+  background-color: #1d2242;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 20px;
+  transition: all 0.3s;
+}
+.submit-button:hover {
+  transform: scale(1.05);
+}
+.login-form input {
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  background-color: #e6e6fa;
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.04);
+}
+.login-form input:focus {
+  outline: none;
+}
+.authorisation-link {
+  color: #262a43;
+  transition: all 0.3s;
+  font-size: 20px;
+}
+.authorisation-link:hover {
+  transform: scale(1.05);
+}

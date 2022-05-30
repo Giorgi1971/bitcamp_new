@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>
+    Author detail Page!
+</h2>
+<div class="jumbotron">
+    <h4 class="card-title">{{ author.get_full_name }}</h4>
+        <div class="card" style="width:300px">
+          <img class="card-img-top" src="{{ author.image.url }}" alt="Card image" style="width:100%">
+          <div class="card-body">
+            <p class="card-text">first_name: {{ author.first_name }}</p>
+            <p class="card-text">last_name: {{ author.last_name }}</p>
+            <p class="card-text">username: {{ author.username }}</p>
+          </div>
+        </div>
+        <br>
+        
+        <div class="container">
+            <p>
+                <a class="btn btn-warning" href="{% url 'user:author_update' pk=author.pk %}">Update</a>
+         
+                <a class="btn btn-danger" href="{% url 'user:author_delete' pk=author.pk %}">Delete</a>
+            </p>
+        </div>
+        
+    </div>
+{% endblock %}

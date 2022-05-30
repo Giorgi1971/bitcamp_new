@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'css/author_form.css' %}"> 
+{% endblock %}
+
+{% block js_files %}
+<script src="{% static 'js/author_form.js' %}" defer></script>
+
+{% endblock js_files %}
+
+
+{% block content %}
+
+
+
+
+
+
+<section class="registration-section container card p-4 mt-4">
+    {% if not form.instance.pk %}
+    <h1>რეგისტრაცია</h1>
+    {% else %}
+    <h1>მონაცემების განახლება</h1>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data" class="registration-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="submit-button">დარეგისტრირება</button>
+    </form>
+    <a href="{% url 'user:login' %}" class="authorisation-link">უკვე დარეგისტრირებული ხართ? გაიარეთ ავტორიზაცია</a> 
+</section>
+
+
+{% endblock %}

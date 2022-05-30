@@ -1,0 +1,23 @@
+<footer class="footer">
+    <div class="footer-image-div">
+        {% comment %} 
+        აქ იქნება ბითქემფის ლოგო 
+        <a href="{% url 'blog:home' %}">
+            <img src="" alt="" class="bitcamp-logo">
+        </a> 
+        {% endcomment %}
+        <h1>BitCamp logo</h1>
+    </div>
+    <nav class="footer-navigation">
+        <a href="{% url 'blog:posts' %}" class="footer-nav-item">პოსტები</a> 
+        <a href="#" class="footer-nav-item">კატეგორიები</a>
+
+         {% if user.is_authenticated  %}
+         <a href="#" class="footer-nav-item">პროფილი</a>
+         <a href="#" class="footer-nav-item">ლოგაუთი</a>
+         {% else %}
+         <a href="#" class="footer-nav-item">ავტორიზაცია</a>
+         <a href="#" class="footer-nav-item">რეგისტრაცია</a>
+         {% endif %}
+    </nav>
+</footer>

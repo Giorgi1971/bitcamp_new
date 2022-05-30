@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'css/post_list.css' %}">
+{% endblock %}
+
+{% block js_files %}
+<script src="{% static 'js/post_list.js' %} " defer></script>
+{% endblock %}
+
+{% block content %}
+<!-- აქ სიმბოლურად ვსვავ პოსტის დამატების ღილაკს, სადაც დაგჭირდება იქ გამოვიყენებთ.
+    ეს ღილაკი გამოუჩნდებათ მარტო მენტორებს, ანუ ვინც იქნება is_staff სტატუსით -->
+<center style="margin: auto;">
+    {% if user.is_staff %}
+    <br>
+    <a class="create-button" href="{% url 'blog:post_add' %}">ახალი პოსტის შექმნა</a>
+    <br>
+    {% endif %}
+    <br>
+
+    <!--------------------------------------ძებნის ღილაკი, თუ გვჭირება, თუ არადა წავშალოთ------------------------------------------------------------>
+    <div class="row">
+        <form method="get" action="{% url 'blog:posts' %}">
+            <input id="search_post" type="text" name="phrase" value="{{ request.GET.phrase }}">
+            <label for="search_post"></label>
+            <button class="create-button" type="submit" name="action">პოსტის ძებნა ფრაზით</button>
+        </form>
+    </div>
+</center>
+
+<!-- აქედან იწყება პოსტების გამოტანა იმდენის რამდენიც მითითებულია view-ში class PostListView(ListView):
+paginate_by = 3 (რამდენი პოსტი გამოჩნდეს)    -->
+{% if page_obj %}
+<section class="posts-section container">
+    <div class="post-list">
+
+        {% for post in page_obj %}
+        <article class="post">
+            <div class="post-header">
+                <h2><a href="{% url 'blog:post' post.pk %}">{{ post.title | title }}</a></h2>
+                <div class="categories">
+
+                    {% for category in post.category.all %}
+                    <a href="{% url 'blog:category' category.pk %}">
+                        <p class="category">{{ category }}</p>
+                    </a>
+                    {% endfor %}
+
+                </div>
+                <div class="post-author-div">
+                    <i class="bi bi-person-circle"></i>
+                    <form method="GET" action="{% url 'blog:posts' %}">
+                        {% csrf_token %}
+                        <button type="hidden" name="qa" value="{{ post.author.pk }}">
+                            <p class="author-name">{{ post.author }}</p>
+                        </button>
+                        <!-- <input type="submit" value="{{ item }}-ს პოსტები"> -->
+                    </form>
+                </div>
+            </div>
+            <div class="post-main-image-div">
+                <a href="{% url 'blog:post' post.pk %}">
+                    <img src="{{ post.image.url }}" alt="პოსტის სურათი">
+                </a>
+            </div>
+            <div class="post-content">
+                <p class="post-description">{{ post.description }}</p>
+            </div>
+        </article>
+        {% endfor %}
+
+    </div>
+
+
+    <div class="pagination">
+        <span class="step-links">
+
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; პირველი გვერდი</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="page-number">
+                {{ page_obj.previous_page_number }}</a>
+            {% endif %}
+
+            <span class="current">
+                {{ page_obj.number }}
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="page-number">{{ page_obj.next_page_number }}</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">ბოლო გვერდი &raquo;</a>
+            {% endif %}
+
+        </span>
+    </div>
+</section>
+
+{% else %}
+
+No Post for this creteria!
+
+{% endif %}
+
+{% endblock %}

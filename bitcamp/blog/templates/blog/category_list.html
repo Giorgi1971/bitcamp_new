@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'css/post_list.css' %}">
+{% endblock %}
+
+{% block js_files %}
+<script src="{% static 'js/post_list.js' %} " defer></script>
+{% endblock %}
+
+{% block content %}
+
+
+{% if category_list %}
+
+<section class="posts-section container">
+    <div class="post-list">
+        {% for item in page_obj %}
+        <article class="post">
+            <div class="post-header">
+                <h2><a href="{% url 'blog:category' item.pk %}">{{ item.category_name | title }} {{ item.pk }}</a></h2>
+            </div>
+            <div class="post-main-image-div">
+                <a href="#">
+                    <img src="{{ item.cat_image.url }}" alt="პოსტის სურათი">
+                </a>
+            </div>
+            <div class="post-content">
+                <p class="post-description">{{ item.describtion }}</p>
+            </div>
+    </article>
+    {% endfor %}
+    
+    
+    {% else %}
+    <h3>   No List </h3>
+    {% endif %}
+</div>
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; პირველი გვერდი</a>
+        <a href="?page={{ page_obj.previous_page_number }}" class="page-number">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+        
+        <span class="current">
+                {{ page_obj.number }}
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="page-number">{{ page_obj.next_page_number }}</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">ბოლო გვერდი &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</section>
+
+
+
+{% endblock %}

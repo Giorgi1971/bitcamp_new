@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static '/css/post_detail.css' %}">
+{% endblock css_files %}
+
+{% block content %}
+<center>
+
+    <h2>{{ user }}-ის ყველა პოსტი:</h2>
+    <a href="{% url 'user:author_update' user.pk %}">პირადი მონაცემების განახლება</a>
+
+    {% if post_list %}
+
+    {% for post in post_list %}
+    <article class="single-post">
+        <div class="single-post-header">
+            <h1>{{ post.title | title }}</h1>
+            <div class="author-div">
+                <i class="bi bi-person-circle"></i>
+                <a href="{% url 'user:author' post.author.pk %}">
+                    <p>{{ post.author | title }}</p>
+                </a>
+                <span>{{ post.create_date | date:"SHORT_DATE_FORMAT" }}</span>
+            </div>
+            <div class="categories">
+                {% for category in post.category.all %}
+                <a href="{% url 'blog:category' category.pk %}" class="single-category">
+                    <p>{{ category }}</p>
+                </a>
+                {% endfor %}
+                <a href="{% url 'blog:post_delete' post.pk %}" class="single-category text-danger">
+                    <p>პოსტის წაშლა</p>
+                </a>
+            </div>
+        </div>
+        <div class="categories">
+            {% for category in post.category.all %}
+            <a href="{% url 'blog:category' category.pk %}" class="single-category">
+                <p>{{ category }}</p>
+            </a>
+            {% endfor %}
+            <a href="{% url 'blog:post_update' post.pk %}" class="single-category text-danger">
+                <p>პოსტის განახლება</p>
+            </a>
+        </div>
+        <div class="single-post-body">
+            <p>{{ post.text | safe }}</p>
+        </div>
+    </article>
+    <article class="single-post">
+        <div class="single-post-header">
+            <h4>
+                კომენტარები:
+            </h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ავტორი</th>
+                        <th scope="col">კომენტარი</th>
+                        <th scope="col">თარიღი</th>
+                        <th scope="col">წაშლა</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in post.comments.all %}
+                    <tr>
+                        <th scope="row">{{item.pk}}</th>
+                        <td>{{item.author}}</td>
+                        <td>{{item.text}}</td>
+                        <td>{{item.created_date}}</td>
+                        <td><a href="{% url 'blog:comment_delete' item.pk %}">კომენტარის წაშლა</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+    </article>
+
+    <br>
+    {% endfor %}
+    {% else %}
+    <h3>
+        {{user | title }} You Have not Posts Yet.
+    </h3>
+    {% endif %}
+
+</center>
+
+{% endblock %}
