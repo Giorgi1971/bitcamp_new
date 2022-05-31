@@ -1,6 +1,3 @@
-from re import template
-from tkinter.ttk import Widget
-from django.db import models
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import (CreateView, UpdateView, DeleteView, DetailView, ListView)
 from django.urls import reverse_lazy, reverse
@@ -11,7 +8,7 @@ from .forms import *
 from django.contrib.auth import (authenticate, login, logout)
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
-from django.views.generic.detail import SingleObjectMixin
+# from django.views.generic.detail import SingleObjectMixin
 from django.views import View
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 

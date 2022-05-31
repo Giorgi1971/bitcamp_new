@@ -3,7 +3,6 @@ from django.urls import reverse
 # Create your models here.
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-from sqlalchemy import null
 
 
 class Author(User):

@@ -10,12 +10,7 @@
 
 {% endblock js_files %}
 
-
 {% block content %}
-
-
-
-
 
 
 <section class="registration-section container card p-4 mt-4">
@@ -24,7 +19,7 @@
     {% else %}
     <h1>მონაცემების განახლება</h1>
     {% endif %}
-    <form method="post" enctype="multipart/form-data" class="registration-form">
+    <form class="registration-form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="submit-button">დარეგისტრირება</button>

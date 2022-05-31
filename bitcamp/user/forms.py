@@ -1,5 +1,4 @@
 from django import forms
-from django.db.models.base import Model
 from django.forms import fields
 from django.forms.widgets import Input
 from .models import Author
@@ -25,10 +24,10 @@ class AuthorForm(forms.ModelForm):
     username = forms.CharField(label=_("ნიკი"), strip=False)
     first_name = forms.CharField(label=_("სახელი"), strip=False)
     last_name = forms.CharField(label=_("გვარი"), strip=False)
-    image = forms.CharField(label=_("სურათი"), strip=False)
+    # image = forms.ImageField(label="სურათი", upload_to='imagess')
     
     error_messages = {
-        'password_mismatch': _('The two password fields don’t match.'),
+        'password_mismatch': _('The two password fields do not match.'),
         }
 
     class Meta:
